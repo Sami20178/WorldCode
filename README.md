@@ -4,11 +4,11 @@ Ein eigenes, von Roblox Studio inspiriertes Open-Source-Web-Editor-Projekt.
 
 ## 📱 Android APK
 
-### ⬇️ WorldCode v0.0.1 herunterladen
+### ⬇️ WorldCode v0.0.2 herunterladen
 
 **[📥 Android APK herunterladen](https://github.com/Sami20178/WorldCode/releases/latest)**
 
-Der Link führt immer zur neuesten veröffentlichten WorldCode-Version.
+Die neueste veröffentlichte Version ist **v0.0.2**. Die frühere Version **v0.0.1** ist nicht mehr die aktuelle Download-Version.
 
 ### 🔄 WorldCode aktualisieren
 
@@ -18,7 +18,7 @@ Wenn eine neue Version veröffentlicht wurde:
 
 Lade die APK herunter und öffne anschließend die heruntergeladene APK auf deinem Android-Gerät, um das Update zu installieren.
 
-Die Android-APK wird automatisch mit GitHub Actions gebaut und als echtes GitHub Release veröffentlicht, sobald ein Versions-Tag wie `v0.0.1` erstellt wird.
+Die Android-APK wird automatisch mit GitHub Actions gebaut und als echtes GitHub Release veröffentlicht, sobald ein Versions-Tag wie `v0.0.2` erstellt wird.
 
 ## Aktuelle Funktionen
 

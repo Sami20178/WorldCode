@@ -8,7 +8,7 @@ android {
         applicationId 'com.sami.worldcode'
         minSdk 23
         targetSdk 35
-        versionCode (project.findProperty('versionCode') ?: '1').toInteger()
-        versionName project.findProperty('versionName') ?: '0.0.1'
+        versionCode (project.findProperty('versionCode') ?: '2').toInteger()
+        versionName project.findProperty('versionName') ?: '0.0.2'
     }
 }

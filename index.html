@@ -1,37 +1,15 @@
 <!doctype html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>WorldCode Studio</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>WorldCode Studio</title><link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header class="topbar">
-    <div class="brand">◈ WorldCode Studio</div>
-    <div class="tools">
-      <button id="playBtn">▶ Play</button>
-      <button id="stopBtn">■ Stop</button>
-      <button id="addBtn">＋ Part</button>
-      <button id="deleteBtn">⌫ Delete</button>
-    </div>
-  </header>
-  <main class="studio">
-    <aside class="panel explorer">
-      <div class="panel-title">Explorer</div>
-      <div id="tree" class="tree"></div>
-    </aside>
-    <section class="workspace">
-      <div class="tabbar"><span class="tab active">World</span><span class="tab">Script</span></div>
-      <div id="viewport" class="viewport"></div>
-      <div class="status">Ready · Select a part to edit it</div>
-    </section>
-    <aside class="panel properties">
-      <div class="panel-title">Properties</div>
-      <div id="properties" class="property-content"><p class="muted">Select an object.</p></div>
-    </aside>
-  </main>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.179.1/build/three.min.js"></script>
-  <script src="app.js"></script>
-</body>
-</html>
+<header class="topbar"><div class="brand">◈ WorldCode Studio</div><div class="tools">
+<button id="playBtn">▶ Play</button><button id="stopBtn">■ Stop</button><button id="addBtn">＋ Part</button><button id="deleteBtn">⌫ Delete</button><button id="saveBtn">💾 Save</button><button id="loadBtn">↻ Load</button>
+</div></header>
+<main class="studio"><aside class="panel explorer"><div class="panel-title">Explorer</div><div id="tree" class="tree"></div></aside>
+<section class="workspace"><div class="tabbar"><span class="tab active">World</span><span class="tab">Script</span></div><div id="viewport" class="viewport"><div class="three-label">3D Viewport</div></div><div class="status">Ready · Select a part to edit it</div></section>
+<aside class="panel properties"><div class="panel-title">Properties</div><div id="properties" class="property-content"><p class="muted">Select an object.</p></div></aside></main>
+<script src="https://cdn.jsdelivr.net/npm/three@0.179.1/build/three.min.js"></script><script src="app.js"></script>
+</body></html>

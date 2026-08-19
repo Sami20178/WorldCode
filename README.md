@@ -4,9 +4,9 @@ Ein eigenes, von Roblox Studio inspiriertes Open-Source-Web-Editor-Projekt.
 
 ## 📱 Android APK
 
-**[⬇️ APK herunterladen](https://github.com/Sami20178/WorldCode/releases)**
+**[⬇️ Android APK herunterladen – v0.0.1](https://github.com/Sami20178/WorldCode/releases/tag/v0.0.1)**
 
-Die Android-Version wird über die GitHub-Releases bereitgestellt. Wenn dort noch keine APK veröffentlicht wurde, gibt es aktuell noch keinen fertigen APK-Download.
+Die Android-Version **v0.0.1** wird über das GitHub-Release bereitgestellt.
 
 ## Aktuelle Funktionen
 

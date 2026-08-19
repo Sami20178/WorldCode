@@ -6,8 +6,10 @@ on:
       version:
         description: 'Version, z.B. 0.0.2'
         required: true
-        default: '0.0.1'
+        default: '0.0.2'
   push:
+    branches:
+      - main
     tags:
       - 'v*'
 
@@ -21,14 +23,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Version aus Tag lesen
+      - name: Version festlegen
         id: version
         shell: bash
         run: |
           if [[ "$GITHUB_REF" == refs/tags/v* ]]; then
             VERSION="${GITHUB_REF#refs/tags/v}"
-          else
+          elif [[ -n "${{ inputs.version }}" ]]; then
             VERSION="${{ inputs.version }}"
+          else
+            VERSION="0.0.2"
           fi
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
           echo "version_code=$(echo "$VERSION" | awk -F. '{print ($1*10000)+($2*100)+$3}')" >> "$GITHUB_OUTPUT"

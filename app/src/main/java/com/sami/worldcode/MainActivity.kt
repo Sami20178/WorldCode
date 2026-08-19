@@ -11,8 +11,8 @@ class MainActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Native/offline start screen: no WebView and no external URL,
-        // so the app cannot show an HTTP 404 on startup.
+        // Native/offline start screen: no WebView and no external URL.
+        // This makes the APK start reliably even without Internet access.
         val root = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
             gravity = Gravity.CENTER
@@ -26,9 +26,9 @@ class MainActivity : Activity() {
             gravity = Gravity.CENTER
         }
 
-        val version = packageManager.getPackageInfo(packageName, 0).versionName ?: "0.0.1"
+        val version = packageManager.getPackageInfo(packageName, 0).versionName ?: "0.0.2"
         val info = TextView(this).apply {
-            text = "Version $version\n\nWorldCode ist gestartet!"
+            text = "Version $version\n\nWorldCode ist gestartet!\n\nAPK v0.0.2"
             textSize = 20f
             gravity = Gravity.CENTER
             setPadding(0, 24, 0, 0)

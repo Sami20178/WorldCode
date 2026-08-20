@@ -4,6 +4,8 @@ on:
   push:
     tags:
       - 'v*.*.*'
+    branches:
+      - 'v0.0.2'
   workflow_dispatch:
 
 permissions:
@@ -38,11 +40,11 @@ jobs:
           path: app/build/outputs/apk/debug/WorldCode-v0.0.2.apk
 
       - name: Create GitHub Release
-        if: startsWith(github.ref, 'refs/tags/')
+        if: startsWith(github.ref, 'refs/tags/') || github.ref == 'refs/heads/v0.0.2'
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ github.ref_name }}
-          name: WorldCode ${{ github.ref_name }}
+          tag_name: v0.0.2
+          name: WorldCode v0.0.2
           body: |
             # WorldCode v0.0.2
 

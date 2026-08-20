@@ -8,20 +8,26 @@ Ein eigenes, von Roblox Studio inspiriertes Open-Source-Web-Editor-Projekt.
 
 **[📥 Android APK herunterladen](https://github.com/Sami20178/WorldCode/releases/latest)**
 
-Die neueste veröffentlichte Version ist **v0.0.2**. Die frühere Version **v0.0.1** ist nicht mehr die aktuelle Download-Version.
+Die aktuelle Version ist **v0.0.2**. Die frühere Version **v0.0.1** ist nicht mehr die aktuelle Download-Version.
 
 ### 🔄 WorldCode aktualisieren
 
-Wenn eine neue Version veröffentlicht wurde:
-
 **[🔄 Neueste WorldCode-Version installieren](https://github.com/Sami20178/WorldCode/releases/latest)**
 
-Lade die APK herunter und öffne anschließend die heruntergeladene APK auf deinem Android-Gerät, um das Update zu installieren.
+Lade die APK aus dem Release herunter und öffne anschließend die APK auf deinem Android-Gerät, um sie zu installieren bzw. zu aktualisieren.
 
-Die Android-APK wird automatisch mit GitHub Actions gebaut und als echtes GitHub Release veröffentlicht, sobald ein Versions-Tag wie `v0.0.2` erstellt wird.
+## 🎉 Release v0.0.2
 
-## Aktuelle Funktionen
+**WorldCode v0.0.2** ist die reparierte Android-Version.
 
+### 🔧 Reparaturen
+- Kein fehlerhafter GitHub-Pages-Aufruf beim Start
+- Kein 404-Fehler durch eine nicht vorhandene Pages-Seite
+- WorldCode Studio startet direkt aus der APK
+- Native/offline Startmöglichkeit
+- APK-Version **0.0.2**
+
+### ✨ Funktionen
 - 3D-Viewport mit Three.js
 - Explorer mit Workspace/World/Parts
 - Parts hinzufügen und löschen

@@ -59,3 +59,5 @@ jobs:
             - Offline-Start möglich
             - APK-Version korrekt auf v0.0.2 gesetzt
           files: app/build/outputs/apk/debug/WorldCode-v0.0.2.apk
+
+# v0.0.2 build trigger

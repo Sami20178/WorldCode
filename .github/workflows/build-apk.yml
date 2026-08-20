@@ -3,77 +3,76 @@ name: Build WorldCode APK
 on:
   workflow_dispatch:
     inputs:
-      version:
-        description: 'Version, z.B. 0.0.2'
+      release_tag:
+        description: 'Release-Tag, z.B. release-first'
         required: true
-        default: '0.0.2'
+        default: 'release-first'
   push:
-    branches:
-      - main
     tags:
-      - 'v*'
+      - 'release-*'
+
+permissions:
+  contents: write
 
 jobs:
   build:
+    name: Build and publish WorldCode APK
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Version festlegen
-        id: version
-        shell: bash
-        run: |
-          if [[ "$GITHUB_REF" == refs/tags/v* ]]; then
-            VERSION="${GITHUB_REF#refs/tags/v}"
-          elif [[ -n "${{ inputs.version }}" ]]; then
-            VERSION="${{ inputs.version }}"
-          else
-            VERSION="0.0.2"
-          fi
-          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
-          echo "version_code=$(echo "$VERSION" | awk -F. '{print ($1*10000)+($2*100)+$3}')" >> "$GITHUB_OUTPUT"
 
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '17'
+          cache: gradle
 
-      - name: Build mit Gradle Wrapper (Code Builder)
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Build APK
         run: |
           chmod +x ./gradlew
-          ./gradlew --no-daemon :app:assembleDebug \
-            -PversionName=${{ steps.version.outputs.version }} \
-            -PversionCode=${{ steps.version.outputs.version_code }}
+          ./gradlew --no-daemon :app:assembleDebug
 
-      - name: Rename APK
-        run: cp app/build/outputs/apk/debug/app-debug.apk "WorldCode-v${{ steps.version.outputs.version }}.apk"
+      - name: Check APK
+        run: test -f app/build/outputs/apk/debug/app-debug.apk
+
+      - name: Prepare APK
+        run: cp app/build/outputs/apk/debug/app-debug.apk WorldCode.apk
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
-          name: WorldCode-v${{ steps.version.outputs.version }}-apk
-          path: WorldCode-v${{ steps.version.outputs.version }}.apk
+          name: WorldCode-APK
+          path: WorldCode.apk
+          if-no-files-found: error
+          retention-days: 30
 
-      - name: Publish APK release
-        if: startsWith(github.ref, 'refs/tags/v')
+      - name: Publish APK to Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ github.ref_name }}
-          name: WorldCode ${{ github.ref_name }}
+          tag_name: ${{ startsWith(github.ref, 'refs/tags/') && github.ref_name || inputs.release_tag }}
+          name: WorldCode Studio
           body: |
-            ## WorldCode ${{ github.ref_name }}
+            # WorldCode Studio
 
-            📱 **Android APK herunterladen:**
-            Die APK wurde mit dem Gradle Wrapper gebaut.
+            WorldCode Studio ist jetzt erstmals als Android APK verfügbar.
 
-            ### 🔧 v0.0.2 Fix
-            - WorldCode Studio startet lokal in der APK.
-            - Keine GitHub-Pages-404-Seite mehr.
-            - Studio-Oberfläche ist direkt in der APK enthalten.
-          files: WorldCode-v${{ steps.version.outputs.version }}.apk
+            ## ✨ Funktionen
+            - 3D-Viewport mit Three.js
+            - Explorer mit Workspace/World/Parts
+            - Parts hinzufügen und löschen
+            - Objekt auswählen
+            - Position X/Y/Z bearbeiten
+            - Play/Stop-Modus
+            - Mobile-freundliches Layout
+
+            ## 📱 Android APK
+            Die APK kann direkt aus diesem Release heruntergeladen und installiert werden.
+          files: WorldCode.apk
           generate_release_notes: false
+          fail_on_unmatched_files: true

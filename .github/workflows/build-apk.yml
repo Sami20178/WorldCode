@@ -43,12 +43,10 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - name: Set up Gradle
-        uses: gradle/actions/setup-gradle@v4
-
-      - name: Build APK
+      - name: Build mit Gradle Wrapper (Code Builder)
         run: |
-          gradle --no-daemon assembleDebug \
+          chmod +x ./gradlew
+          ./gradlew --no-daemon :app:assembleDebug \
             -PversionName=${{ steps.version.outputs.version }} \
             -PversionCode=${{ steps.version.outputs.version_code }}
 
@@ -71,6 +69,11 @@ jobs:
             ## WorldCode ${{ github.ref_name }}
 
             📱 **Android APK herunterladen:**
-            Lade die APK unten herunter und installiere sie auf deinem Android-Gerät.
+            Die APK wurde mit dem Gradle Wrapper gebaut.
+
+            ### 🔧 v0.0.2 Fix
+            - WorldCode Studio startet lokal in der APK.
+            - Keine GitHub-Pages-404-Seite mehr.
+            - Studio-Oberfläche ist direkt in der APK enthalten.
           files: WorldCode-v${{ steps.version.outputs.version }}.apk
           generate_release_notes: false

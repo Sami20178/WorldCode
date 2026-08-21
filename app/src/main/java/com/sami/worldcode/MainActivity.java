@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.Settings;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -19,7 +18,6 @@ import java.net.URL;
 import org.json.JSONObject;
 
 public class MainActivity extends Activity {
-    private static final String VERSION = "0.0.2";
     private static final String RELEASE_API = "https://api.github.com/repos/Sami20178/WorldCode/releases/latest";
 
     @Override
@@ -43,13 +41,13 @@ public class MainActivity extends Activity {
                 c.setRequestProperty("Accept", "application/vnd.github+json");
                 c.setConnectTimeout(7000); c.setReadTimeout(7000);
                 JSONObject release = new JSONObject(read(c.getInputStream()));
-                String tag = release.optString("tag_name", "").replace("v", "");
+                String tag = release.optString("tag_name", "").replace("release-v", "").replace("v", "");
                 String apkUrl = "";
                 for (Object o : release.getJSONArray("assets")) {
                     JSONObject a = (JSONObject)o;
                     if (a.optString("name").endsWith(".apk")) { apkUrl = a.optString("browser_download_url"); break; }
                 }
-                if (!tag.isEmpty() && isNewer(tag, VERSION) && !apkUrl.isEmpty()) {
+                if (!tag.isEmpty() && isNewer(tag, BuildConfig.VERSION_NAME) && !apkUrl.isEmpty()) {
                     String finalApkUrl = apkUrl;
                     runOnUiThread(() -> new AlertDialog.Builder(this)
                         .setTitle("Aktualisierung verfügbar")
@@ -63,8 +61,11 @@ public class MainActivity extends Activity {
     }
 
     private boolean isNewer(String a, String b) {
-        try { return Integer.parseInt(a.replace(".", "")) > Integer.parseInt(b.replace(".", "")); }
-        catch (Exception e) { return !a.equals(b); }
+        try {
+            String[] x=a.split("\\."), y=b.split("\\.");
+            for(int i=0;i<Math.max(x.length,y.length);i++) { int xi=i<x.length?Integer.parseInt(x[i]):0, yi=i<y.length?Integer.parseInt(y[i]):0; if(xi!=yi)return xi>yi; }
+            return false;
+        } catch(Exception e){return false;}
     }
 
     private void downloadAndInstall(String url, String version) {

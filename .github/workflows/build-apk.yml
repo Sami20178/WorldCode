@@ -8,6 +8,8 @@ on:
         required: true
         default: 'release-first'
   push:
+    branches:
+      - main
     tags:
       - 'release-*'
 
@@ -41,12 +43,11 @@ jobs:
       - name: Verify build environment
         run: |
           java -version
-          ./gradlew --version
           chmod +x ./gradlew
+          ./gradlew --version
 
       - name: Build APK
-        run: |
-          ./gradlew --no-daemon --stacktrace --info :app:assembleDebug
+        run: ./gradlew --no-daemon --stacktrace --info :app:assembleDebug
 
       - name: Check APK
         run: |

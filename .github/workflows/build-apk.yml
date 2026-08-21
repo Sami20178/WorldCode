@@ -63,7 +63,7 @@ jobs:
             Neue automatisch gebaute Version von WorldCode Studio.
 
             ## Android APK
-            Die APK kann direkt aus diesem Release installiert werden.
+            Die APK kann direkt unter **Assets** heruntergeladen werden.
           files: WorldCode.apk
           generate_release_notes: true
           fail_on_unmatched_files: true

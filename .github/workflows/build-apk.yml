@@ -5,8 +5,6 @@ on:
   push:
     branches:
       - main
-    tags:
-      - 'release-*'
 
 permissions:
   contents: write
@@ -35,10 +33,10 @@ jobs:
           yes | sdkmanager --licenses >/dev/null || true
           sdkmanager "platform-tools" "platforms;android-35" "build-tools;35.0.0"
 
-      - name: Build APK
+      - name: Build APK with automatic version
         run: |
           chmod +x ./gradlew
-          ./gradlew --no-daemon --stacktrace :app:assembleDebug
+          ./gradlew --no-daemon --stacktrace :app:assembleDebug -PversionCode=${{ github.run_number }} -PversionName=0.0.${{ github.run_number }}
 
       - name: Check APK
         run: test -s app/build/outputs/apk/debug/app-debug.apk
@@ -54,19 +52,18 @@ jobs:
           if-no-files-found: error
           retention-days: 30
 
-      - name: Publish APK to GitHub Release
-        if: startsWith(github.ref, 'refs/tags/release-')
+      - name: Publish APK release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ github.ref_name }}
-          name: WorldCode Studio ${{ github.ref_name }}
+          tag_name: release-v0.0.${{ github.run_number }}
+          name: WorldCode Studio v0.0.${{ github.run_number }}
           body: |
             # WorldCode Studio
 
-            WorldCode Studio ist als Android APK verfügbar.
+            Neue automatisch gebaute Version von WorldCode Studio.
 
             ## Android APK
-            Die APK kann direkt aus diesem Release heruntergeladen und installiert werden.
+            Die APK kann direkt aus diesem Release installiert werden.
           files: WorldCode.apk
           generate_release_notes: true
           fail_on_unmatched_files: true

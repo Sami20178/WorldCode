@@ -8,8 +8,10 @@ android {
         applicationId 'com.sami.worldcode'
         minSdk 23
         targetSdk 35
-        versionCode (project.findProperty('versionCode') ?: '2').toInteger()
-        versionName project.findProperty('versionName') ?: '0.0.2'
+        def vc = project.hasProperty('versionCode') ? project.property('versionCode').toString() : '2'
+        def vn = project.hasProperty('versionName') ? project.property('versionName').toString() : '0.0.2'
+        versionCode Integer.parseInt(vc)
+        versionName vn
     }
 }
 

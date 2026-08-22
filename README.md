@@ -6,15 +6,11 @@ Ein eigenes, von Roblox Studio inspiriertes Open-Source-Web-Editor-Projekt.
 
 ### ⬇️ Android APK herunterladen
 
-**[📥 Android APK herunterladen](https://github.com/Sami20178/WorldCode/releases/latest)**
+**[📥 Neueste Android APK herunterladen](https://github.com/Sami20178/WorldCode/releases/latest)**
 
-Dies ist die erste veröffentlichte Version von WorldCode Studio.
+Die APK wird automatisch mit GitHub Actions gebaut und im GitHub Release veröffentlicht.
 
-## 🎉 Erste Version
-
-WorldCode Studio ist jetzt erstmals als Android APK verfügbar.
-
-### ✨ Funktionen
+## ✨ Funktionen
 - 3D-Viewport mit Three.js
 - Explorer mit Workspace/World/Parts
 - Parts hinzufügen und löschen
@@ -22,10 +18,11 @@ WorldCode Studio ist jetzt erstmals als Android APK verfügbar.
 - Position X/Y/Z bearbeiten
 - Play/Stop-Modus
 - Mobile-freundliches Layout
+- Update-Prüfung über GitHub Releases
 
 ## 📦 Installation
 
-Lade die Android APK aus dem aktuellen GitHub Release herunter und installiere sie auf deinem Android-Gerät.
+Öffne die aktuelle GitHub-Release-Seite und lade `WorldCode.apk` unter **Assets** herunter. Danach kannst du die APK auf deinem Android-Gerät installieren.
 
 ## Start
 

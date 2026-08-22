@@ -1,4 +1,6 @@
-plugins { id 'com.android.application' }
+plugins {
+    id 'com.android.application'
+}
 
 android {
     namespace 'com.sami.worldcode'
@@ -12,12 +14,23 @@ android {
         versionName '0.0.2'
     }
 
-    // CI can override the version safely without ever passing null.
+    // CI may override these values; defaults keep local builds working.
     if (project.hasProperty('versionCode')) {
         defaultConfig.versionCode = Integer.parseInt(project.property('versionCode').toString())
     }
     if (project.hasProperty('versionName')) {
         defaultConfig.versionName = project.property('versionName').toString()
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    packaging {
+        resources {
+            excludes += ['/META-INF/AL2.0', '/META-INF/LGPL2.1']
+        }
     }
 }
 

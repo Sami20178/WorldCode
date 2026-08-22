@@ -8,10 +8,16 @@ android {
         applicationId 'com.sami.worldcode'
         minSdk 23
         targetSdk 35
-        def vc = project.hasProperty('versionCode') ? project.property('versionCode').toString() : '2'
-        def vn = project.hasProperty('versionName') ? project.property('versionName').toString() : '0.0.2'
-        versionCode Integer.parseInt(vc)
-        versionName vn
+        versionCode 2
+        versionName '0.0.2'
+    }
+
+    // CI can override the version safely without ever passing null.
+    if (project.hasProperty('versionCode')) {
+        defaultConfig.versionCode = Integer.parseInt(project.property('versionCode').toString())
+    }
+    if (project.hasProperty('versionName')) {
+        defaultConfig.versionName = project.property('versionName').toString()
     }
 }
 

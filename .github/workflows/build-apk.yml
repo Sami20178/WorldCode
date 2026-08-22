@@ -3,23 +3,24 @@ name: Build WorldCode APK
 on:
   workflow_dispatch:
   push:
-    branches:
-      - main
+    branches: [main]
 
 permissions:
   contents: write
+
+env:
+  GRADLE_OPTS: -Dorg.gradle.daemon=false -Dorg.gradle.jvmargs=-Xmx2g
 
 jobs:
   build:
     name: Build and publish WorldCode APK
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set up JDK 17
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: '17'
@@ -28,42 +29,45 @@ jobs:
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
 
-      - name: Install Android SDK 35
+      - name: Install Android SDK
         run: |
           yes | sdkmanager --licenses >/dev/null || true
           sdkmanager "platform-tools" "platforms;android-35" "build-tools;35.0.0"
 
-      - name: Build APK with automatic version
+      - name: Make Gradle executable
+        run: chmod +x ./gradlew
+
+      - name: Clean
+        run: ./gradlew --no-daemon clean
+
+      - name: Build APK
+        run: ./gradlew --no-daemon --stacktrace :app:assembleDebug
+
+      - name: Find APK
         run: |
-          chmod +x ./gradlew
-          ./gradlew --no-daemon --stacktrace :app:assembleDebug -PversionCode=${{ github.run_number }} -PversionName=0.0.${{ github.run_number }}
-
-      - name: Check APK
-        run: test -s app/build/outputs/apk/debug/app-debug.apk
-
-      - name: Prepare APK
-        run: cp app/build/outputs/apk/debug/app-debug.apk WorldCode.apk
+          APK="$(find app/build/outputs/apk -type f -name '*.apk' | head -n 1)"
+          test -n "$APK"
+          cp "$APK" WorldCode.apk
+          ls -lh WorldCode.apk
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
-          name: WorldCode-APK
+          name: WorldCode-APK-${{ github.run_number }}
           path: WorldCode.apk
           if-no-files-found: error
           retention-days: 30
 
-      - name: Publish APK release
+      - name: Publish GitHub Release with APK
+        if: github.ref == 'refs/heads/main'
         uses: softprops/action-gh-release@v2
         with:
           tag_name: release-v0.0.${{ github.run_number }}
           name: WorldCode Studio v0.0.${{ github.run_number }}
           body: |
-            # WorldCode Studio
+            Neue WorldCode Studio Version.
 
-            Neue automatisch gebaute Version von WorldCode Studio.
-
-            ## Android APK
-            Die APK kann direkt unter **Assets** heruntergeladen werden.
+            **Android APK:** Unter Assets kann `WorldCode.apk` heruntergeladen werden.
           files: WorldCode.apk
-          generate_release_notes: true
           fail_on_unmatched_files: true
+          generate_release_notes: true

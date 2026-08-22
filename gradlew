@@ -15,12 +15,20 @@ fi
 
 GRADLE_VERSION=8.11.1
 DIST="$HOME/.gradle/wrapper/dists/gradle-$GRADLE_VERSION-bin"
-ZIP="$HOME/.gradle/wrapper/dists/gradle-$GRADLE_VERSION-bin.zip"
+ZIP="$DIST/gradle-$GRADLE_VERSION-bin.zip"
 URL="https://services.gradle.org/distributions/gradle-$GRADLE_VERSION-bin.zip"
 
 if [ ! -x "$DIST/gradle-$GRADLE_VERSION/bin/gradle" ]; then
   mkdir -p "$DIST"
-  if command -v curl >/dev/null 2>&1; then curl -fsSL "$URL" -o "$ZIP"; else wget -q "$URL" -O "$ZIP"; fi
+  if command -v curl >/dev/null 2>&1; then
+    curl -fL "$URL" -o "$ZIP"
+  elif command -v wget >/dev/null 2>&1; then
+    wget -q "$URL" -O "$ZIP"
+  else
+    echo "ERROR: curl oder wget wird benötigt, um Gradle herunterzuladen." >&2
+    exit 1
+  fi
+  command -v unzip >/dev/null 2>&1 || { echo "ERROR: unzip wird benötigt." >&2; exit 1; }
   unzip -q -o "$ZIP" -d "$DIST"
 fi
 

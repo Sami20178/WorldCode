@@ -10,15 +10,8 @@ android {
         applicationId 'com.sami.worldcode'
         minSdk 23
         targetSdk 35
-        versionCode 2
-        versionName '0.0.2'
-    }
-
-    if (project.hasProperty('versionCode')) {
-        defaultConfig.versionCode = Integer.parseInt(project.property('versionCode').toString())
-    }
-    if (project.hasProperty('versionName')) {
-        defaultConfig.versionName = project.property('versionName').toString()
+        versionCode 3
+        versionName '0.1.0'
     }
 
     compileOptions {
